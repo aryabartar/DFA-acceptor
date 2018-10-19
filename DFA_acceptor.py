@@ -22,6 +22,12 @@ def split_comma(string):
 
 
 def get_dfa_elements(dfa_array):
+    def make_transition_dict(transition_array, s_array):
+        temp_dict = {}
+        for i in range(0, len(s_array)):
+            temp_dict[s_array[i]] = transition_array[i]
+        return temp_dict
+
     main_dict = {}
     transition_array = []
     for element in dfa_array:
@@ -40,10 +46,19 @@ def get_dfa_elements(dfa_array):
             main_dict['F'] = f_array
         elif first_element == "{":
             transition_array.append(split_transitions(element))
-    main_dict['T'] = transition_array
+    main_dict['T'] = make_transition_dict(transition_array, s_array)
+
     return main_dict
 
 
+def read_strings():
+    dfa_strings = open("Strings_for_first_DFA.txt", "r").read().split("\n")
+    return dfa_strings
+
+
 dfa_array = open("FIRST_DFA.txt", "r").read().split("\n")
-print(dfa_array)
-print(get_dfa_elements(dfa_array))
+dfa_dict = get_dfa_elements(dfa_array)
+print(dfa_dict)
+start_state = dfa_dict["I"][0]
+for element in read_strings()[0]:
+    pass
