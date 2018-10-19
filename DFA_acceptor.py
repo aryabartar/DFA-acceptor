@@ -56,10 +56,19 @@ def read_strings():
     return dfa_strings
 
 
-dfa_array = open("FIRST_DFA.txt", "r").read().split("\n")
-dfa_dict = get_dfa_elements(dfa_array)
+def check_state_is_final(state, dfa_dict):
+    is_final = False
+    for element in dfa_dict['F']:
+        if state == element :
+            is_final = True
+    return is_final
+
+
+dfa_dict = get_dfa_elements(open("FIRST_DFA.txt", "r").read().split("\n"))
 print(dfa_dict)
-start_state = dfa_dict["I"][0]
+present_state = dfa_dict["I"][0]
 for element in read_strings()[0]:
-    pass
-##
+    transition_index = dfa_dict['E'].index(element)
+    present_state = dfa_dict['T'][present_state][transition_index]
+    print(present_state)
+print (check_state_is_final(present_state , dfa_dict) )
