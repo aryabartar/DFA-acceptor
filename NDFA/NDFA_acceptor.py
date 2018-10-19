@@ -78,7 +78,12 @@ def print_results(result_array , machine_file_name):
 def main_func(machine_file_name, string_file_name):
     ndfa_dict = get_ndfa_elements(open(machine_file_name, "r").read().split("\n"))
     print(ndfa_dict)
+    find (ndfa_dict , 'e' , '')
 
+def find (ndfa_dict , present_state , transition_input) :
+    transition_index = ndfa_dict['E'].index(transition_input)
+    if ndfa_dict['T'][present_state][transition_index] == '':
+        print("HHHH")
 
 FILES_NAME = (("First_NFA.txt", "Strings_for_first_NFA.txt"),)
 
