@@ -62,3 +62,4 @@ print(dfa_dict)
 start_state = dfa_dict["I"][0]
 for element in read_strings()[0]:
     pass
+#
