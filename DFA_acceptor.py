@@ -8,7 +8,7 @@ def split_transitions(transition):
             found = False
             if element == "}":
                 array.append("")
-            else :
+            else:
                 array.append(element)
     return array
 
@@ -67,8 +67,8 @@ def check_state_is_final(state, dfa_dict):
     return is_final
 
 
-def print_results(result_array):
-    print("RESULTS : ")
+def print_results(result_array , machine_file_name):
+    print("RESULTS FOR " + machine_file_name + " : ")
     counter = 1
     for element in result_array:
         print(str(counter) + " => " + str(element))
@@ -77,18 +77,21 @@ def print_results(result_array):
 
 def main_func(machine_file_name, string_file_name):
     dfa_dict = get_dfa_elements(open(machine_file_name, "r").read().split("\n"))
-    print(dfa_dict)
     result_array = []
     for string in read_strings(string_file_name):
         present_state = dfa_dict["I"][0]
         for element in string:
             transition_index = dfa_dict['E'].index(element)
-            present_state = dfa_dict['T'][present_state][transition_index]
+            try:
+                present_state = dfa_dict['T'][present_state][transition_index]
+            except :
+                present_state = "NOTHING"
+                break
         result_array.append(check_state_is_final(present_state, dfa_dict))
-    print_results(result_array)
+    print_results(result_array , machine_file_name)
 
 
-FILES_NAME = (("FIRST_DFA.txt", "Strings_for_first_DFA.txt"),
+FILES_NAME = (("First_DFA.txt", "Strings_for_first_DFA.txt"),
               ("Second_DFA.txt", "Strings_for_second_DFA.txt"),
               ("Third_DFA.txt", "Strings_for_third_DFA.txt"),
               ("Fourth_DFA.txt", "Strings_for_fourth_DFA.txt"),
