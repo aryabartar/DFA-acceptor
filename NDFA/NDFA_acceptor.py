@@ -88,12 +88,14 @@ def good_print_ndfa(ndfa_dict):
 def main_func(machine_file_name, string_file_name):
     ndfa_dict = get_ndfa_elements(open(machine_file_name, "r").read().split("\n"))
     input_strings_array = open(string_file_name, "r").read().split("\n")
-    good_print_ndfa(ndfa_dict)
+    # good_print_ndfa(ndfa_dict)
     # print(len(input_strings_array[0]))
 
-    # for element in input_strings_array:
-    #     print(element)
-    find(ndfa_dict, ndfa_dict['I'][0], input_strings_array[0], 0)
+    counter = 1
+    for element in input_strings_array:
+        print(str(counter) + " => ")
+        counter += 1
+        find(ndfa_dict, ndfa_dict['I'][0], element, 0)
 
 
 def check_the_last_string(ndfa_dict, present_state, transition_index):
@@ -122,14 +124,15 @@ def find(ndfa_dict, present_state, transition_input, index):
             find(ndfa_dict, element, transition_input, index + 1)
 
 
-FILES_NAME = (("First_NFA.txt", "Strings_for_first_NFA.txt"),)
-              # ("Second_NFA.txt", "Strings_for_second_NFA.txt"),
-              # ("Third_NFA.txt", "Strings_for_third_NFA.txt"),
-              # ("Fourth_NFA.txt", "Strings_for_fourth_NFA.txt"),
-              # ("Fifth_NFA.txt", "Strings_for_fifth_NFA.txt"),)
+FILES_NAME = (("First_NFA.txt", "Strings_for_first_NFA.txt"),
+              ("Second_NFA.txt", "Strings_for_second_NFA.txt"),
+              ("Third_NFA.txt", "Strings_for_third_NFA.txt"),
+              ("Fourth_NFA.txt", "Strings_for_fourth_NFA.txt"),
+              ("Fifth_NFA.txt", "Strings_for_fifth_NFA.txt"),)
 
 # global is_accepted
 for item in FILES_NAME:
+    print("RESULT FOR " + item[0] + " : ")
     main_func(item[0], item[1])
     # print(is_accepted)
     # is_accepted = False
