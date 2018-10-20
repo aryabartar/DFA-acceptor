@@ -1,14 +1,14 @@
 def split_transitions(transition):
-    array = []
-    temp_array = transition.split ("{")
+    temp_array = transition.split("{")
     transitions_array = []
-    for element in temp_array :
+
+    for element in temp_array:
         transitions_array.append(element[0:-2])
     transitions_array = transitions_array[1:]
-
     temp_array = []
-    for element in transitions_array :
-        temp_array.append (element.split(","))
+
+    for element in transitions_array:
+        temp_array.append(element.split(","))
     transitions_array = temp_array
     return transitions_array
 
@@ -83,15 +83,20 @@ def good_print_ndfa(ndfa_dict):
 
 def main_func(machine_file_name, string_file_name):
     ndfa_dict = get_ndfa_elements(open(machine_file_name, "r").read().split("\n"))
+    input_strings_array = open(string_file_name, "r").read().split("\n")
     good_print_ndfa(ndfa_dict)
-    # find(ndfa_dict, 'e', '3')
+
+    find(ndfa_dict, ndfa_dict['I'][0], input_strings_array[0], 0)
 
 
-def find(ndfa_dict, present_state, transition_input):
-    transition_index = ndfa_dict['E'].index(transition_input)
-    if ndfa_dict['T'][present_state][transition_index] == '':
+def find(ndfa_dict, present_state, transition_input, index):
+    transition_index = ndfa_dict['E'].index(transition_input[index])
+    print(index)
+    if '' in ndfa_dict['T'][present_state][transition_index]:
         return False
-        # for
+    else:
+        for element in ndfa_dict['T'][present_state][transition_index]:
+            find(ndfa_dict, element, transition_input, index + 1)
 
 
 FILES_NAME = (("Second_NFA.txt", "Strings_for_second_NFA.txt"),)
