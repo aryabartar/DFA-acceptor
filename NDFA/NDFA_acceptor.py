@@ -89,18 +89,26 @@ def main_func(machine_file_name, string_file_name):
 
     find(ndfa_dict, ndfa_dict['I'][0], input_strings_array[0], 0)
 
+def check_the_last_string (ndfa_dict , present_state , transition_index):
+    last_char = ndfa_dict['T'][present_state][transition_index][0]
+    return last_char
 
 def find(ndfa_dict, present_state, transition_input, index):
     transition_index = ndfa_dict['E'].index(transition_input[index])
-    print("------------------")
+    print("-------------------")
     print(index)
     print(transition_index)
     print(present_state)
     print("-------------------")
     if '' in ndfa_dict['T'][present_state][transition_index]:
         return False
-    elif len(transition_input) == index + 1:
-        print("Reached end ")
+    elif len(transition_input)  == index+1 :
+        last_char = check_the_last_string(ndfa_dict , present_state , transition_index)
+        if last_char in ndfa_dict['F']:
+            print("FOUND AND IS FINAL STATE")
+        else:
+            print("NOT IN FINAL STATE !")
+        print("I MEAN : " + last_char)
     else:
         for element in ndfa_dict['T'][present_state][transition_index]:
             find(ndfa_dict, element, transition_input, index + 1)
