@@ -85,15 +85,22 @@ def main_func(machine_file_name, string_file_name):
     ndfa_dict = get_ndfa_elements(open(machine_file_name, "r").read().split("\n"))
     input_strings_array = open(string_file_name, "r").read().split("\n")
     good_print_ndfa(ndfa_dict)
+    print(len(input_strings_array[0]))
 
     find(ndfa_dict, ndfa_dict['I'][0], input_strings_array[0], 0)
 
 
 def find(ndfa_dict, present_state, transition_input, index):
     transition_index = ndfa_dict['E'].index(transition_input[index])
+    print("------------------")
     print(index)
+    print(transition_index)
+    print(present_state)
+    print("-------------------")
     if '' in ndfa_dict['T'][present_state][transition_index]:
         return False
+    elif len(transition_input) == index + 1:
+        print("Reached end ")
     else:
         for element in ndfa_dict['T'][present_state][transition_index]:
             find(ndfa_dict, element, transition_input, index + 1)
