@@ -1,16 +1,16 @@
 def split_transitions(transition):
-    found = False
     array = []
-    for element in transition:
-        if element == "{":
-            found = True
-        elif found:
-            found = False
-            if element == "}":
-                array.append("")
-            else:
-                array.append(element)
-    return array
+    temp_array = transition.split ("{")
+    transitions_array = []
+    for element in temp_array :
+        transitions_array.append(element[0:-2])
+    transitions_array = transitions_array[1:]
+
+    temp_array = []
+    for element in transitions_array :
+        temp_array.append (element.split(","))
+    transitions_array = temp_array
+    return transitions_array
 
 
 def split_comma(string):
@@ -67,7 +67,7 @@ def check_state_is_final(state, dfa_dict):
     return is_final
 
 
-def print_results(result_array , machine_file_name):
+def print_results(result_array, machine_file_name):
     print("RESULTS FOR " + machine_file_name + " : ")
     counter = 1
     for element in result_array:
@@ -75,17 +75,26 @@ def print_results(result_array , machine_file_name):
         counter += 1
 
 
+def good_print_ndfa(ndfa_dict):
+    for element in ndfa_dict:
+        print(element + " => ")
+        print(ndfa_dict[element])
+
+
 def main_func(machine_file_name, string_file_name):
     ndfa_dict = get_ndfa_elements(open(machine_file_name, "r").read().split("\n"))
-    print(ndfa_dict)
-    find (ndfa_dict , 'e' , '')
+    good_print_ndfa(ndfa_dict)
+    # find(ndfa_dict, 'e', '3')
 
-def find (ndfa_dict , present_state , transition_input) :
+
+def find(ndfa_dict, present_state, transition_input):
     transition_index = ndfa_dict['E'].index(transition_input)
     if ndfa_dict['T'][present_state][transition_index] == '':
-        print("HHHH")
+        return False
+        # for
 
-FILES_NAME = (("First_NFA.txt", "Strings_for_first_NFA.txt"),)
+
+FILES_NAME = (("Second_NFA.txt", "Strings_for_second_NFA.txt"),)
 
 for item in FILES_NAME:
     main_func(item[0], item[1])
