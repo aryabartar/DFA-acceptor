@@ -1,7 +1,11 @@
+is_accepted = False
+
+
 def split_transitions(transition):
+    transition = transition + ","
+
     temp_array = transition.split("{")
     transitions_array = []
-
     for element in temp_array:
         transitions_array.append(element[0:-2])
     transitions_array = transitions_array[1:]
@@ -85,36 +89,47 @@ def main_func(machine_file_name, string_file_name):
     ndfa_dict = get_ndfa_elements(open(machine_file_name, "r").read().split("\n"))
     input_strings_array = open(string_file_name, "r").read().split("\n")
     good_print_ndfa(ndfa_dict)
-    print(len(input_strings_array[0]))
+    # print(len(input_strings_array[0]))
 
+    # for element in input_strings_array:
+    #     print(element)
     find(ndfa_dict, ndfa_dict['I'][0], input_strings_array[0], 0)
 
-def check_the_last_string (ndfa_dict , present_state , transition_index):
+
+def check_the_last_string(ndfa_dict, present_state, transition_index):
     last_char = ndfa_dict['T'][present_state][transition_index][0]
     return last_char
 
+
 def find(ndfa_dict, present_state, transition_input, index):
     transition_index = ndfa_dict['E'].index(transition_input[index])
-    print("-------------------")
-    print(index)
-    print(transition_index)
-    print(present_state)
-    print("-------------------")
+    # print("-------------------")
+    # print(index)
+    # print(transition_index)
+    # print(present_state)
+    # print("-------------------")
     if '' in ndfa_dict['T'][present_state][transition_index]:
         return False
-    elif len(transition_input)  == index+1 :
-        last_char = check_the_last_string(ndfa_dict , present_state , transition_index)
+    elif len(transition_input) == index + 1:
+        last_char = check_the_last_string(ndfa_dict, present_state, transition_index)
         if last_char in ndfa_dict['F']:
-            print("FOUND AND IS FINAL STATE")
-        else:
-            print("NOT IN FINAL STATE !")
-        print("I MEAN : " + last_char)
+            print("ACCEPTED")
+            # else:
+            #     print("NOT IN FINAL STATE !")
+            # print("I MEAN : " + last_char)
     else:
         for element in ndfa_dict['T'][present_state][transition_index]:
             find(ndfa_dict, element, transition_input, index + 1)
 
 
-FILES_NAME = (("Second_NFA.txt", "Strings_for_second_NFA.txt"),)
+FILES_NAME = (("First_NFA.txt", "Strings_for_first_NFA.txt"),)
+              # ("Second_NFA.txt", "Strings_for_second_NFA.txt"),
+              # ("Third_NFA.txt", "Strings_for_third_NFA.txt"),
+              # ("Fourth_NFA.txt", "Strings_for_fourth_NFA.txt"),
+              # ("Fifth_NFA.txt", "Strings_for_fifth_NFA.txt"),)
 
+# global is_accepted
 for item in FILES_NAME:
     main_func(item[0], item[1])
+    # print(is_accepted)
+    # is_accepted = False
