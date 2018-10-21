@@ -118,11 +118,8 @@ def find(ndfa_dict, present_state, transition_input, index):
     elif len(transition_input) == index + 1:
         last_char = check_the_last_string(ndfa_dict, present_state, transition_index)
         if last_char in ndfa_dict['F']:
-            # print("ACCEPTED")
             is_accepted = True
-            # else:
-            #     print("NOT IN FINAL STATE !")
-            # print("I MEAN : " + last_char)
+
     else:
         for element in ndfa_dict['T'][present_state][transition_index]:
             find(ndfa_dict, element, transition_input, index + 1)
@@ -134,10 +131,6 @@ FILES_NAME = (("First_NFA.txt", "Strings_for_first_NFA.txt"),
               ("Fourth_NFA.txt", "Strings_for_fourth_NFA.txt"),
               ("Fifth_NFA.txt", "Strings_for_fifth_NFA.txt"),)
 
-# global is_accepted
 for item in FILES_NAME:
-    # global is_accepted
     print("\nRESULT FOR " + item[0] + " : ")
     main_func(item[0], item[1])
-    # print(is_accepted)
-    # is_accepted = False
