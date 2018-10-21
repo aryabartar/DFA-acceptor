@@ -92,10 +92,12 @@ def main_func(machine_file_name, string_file_name):
     # print(len(input_strings_array[0]))
 
     counter = 1
+    global is_accepted
     for element in input_strings_array:
-        print(str(counter) + " => ")
-        counter += 1
         find(ndfa_dict, ndfa_dict['I'][0], element, 0)
+        print(str(counter) + " => " + str(is_accepted))
+        is_accepted = False
+        counter += 1
 
 
 def check_the_last_string(ndfa_dict, present_state, transition_index):
@@ -104,6 +106,7 @@ def check_the_last_string(ndfa_dict, present_state, transition_index):
 
 
 def find(ndfa_dict, present_state, transition_input, index):
+    global is_accepted
     transition_index = ndfa_dict['E'].index(transition_input[index])
     # print("-------------------")
     # print(index)
@@ -115,7 +118,8 @@ def find(ndfa_dict, present_state, transition_input, index):
     elif len(transition_input) == index + 1:
         last_char = check_the_last_string(ndfa_dict, present_state, transition_index)
         if last_char in ndfa_dict['F']:
-            print("ACCEPTED")
+            # print("ACCEPTED")
+            is_accepted = True
             # else:
             #     print("NOT IN FINAL STATE !")
             # print("I MEAN : " + last_char)
@@ -132,7 +136,8 @@ FILES_NAME = (("First_NFA.txt", "Strings_for_first_NFA.txt"),
 
 # global is_accepted
 for item in FILES_NAME:
-    print("RESULT FOR " + item[0] + " : ")
+    # global is_accepted
+    print("\nRESULT FOR " + item[0] + " : ")
     main_func(item[0], item[1])
     # print(is_accepted)
     # is_accepted = False
