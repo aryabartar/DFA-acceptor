@@ -134,3 +134,4 @@ FILES_NAME = (("First_NFA.txt", "Strings_for_first_NFA.txt"),
 for item in FILES_NAME:
     print("\nRESULT FOR " + item[0] + " : ")
     main_func(item[0], item[1])
+    #
